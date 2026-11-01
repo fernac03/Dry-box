@@ -1,0 +1,167 @@
+views:
+  - type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: Ender 3 V3 SE
+              - type: entities
+                style:
+                  .: |
+                    ha-card {
+                      border: solid 1px var(--border-color);
+                      font-family: Raleway;
+                    }
+                  '#states div:nth-child(9)':
+                    hui-sensor-entity-row:
+                      $: |
+                        .text-content::after{
+                           content: '';
+                           display: inline-block;
+                           width: 34px;
+                           height: 34px;
+                           -moz-border-radius: 17px;
+                           -webkit-border-radius: 17px;
+                           border-radius: 17px;
+                           background-color:
+                           {% set updated = (as_timestamp(now()) - as_timestamp(states.sensor.octoprint.last_updated)) / 60 %}
+                           {% set state = states.sensor.octoprint.state %}
+                           {% if state == 'Printing' and updated < 5 %}
+                             orange
+                           {% elif state == 'Operational' and updated < 5 %}
+                             green
+                           {% else %}
+                             red
+                           {% endif %}
+                           ;
+                           margin-left: 10px;
+                        }
+                        .text-content {
+                           display: flex;
+                           justify-content: center;
+                           align-items: center;
+                        }
+                entities:
+                  - entity: light.led_ender3_fita_de_led_cct
+                    name: Ilumuniçâo
+                  - entity: sensor.escritorio_octoprint_actual_tool0_temp
+                    name: Bico
+                    state_header: Está
+                    type: custom:multiple-entity-row
+                    entities:
+                      - entity: sensor.escritorio_octoprint_target_tool0_temp
+                        unit: °C
+                        name: Deve ser
+                  - entity: sensor.escritorio_octoprint_actual_bed_temp
+                    name: Mesa aquecida
+                    state_header: Está
+                    type: custom:multiple-entity-row
+                    entities:
+                      - entity: sensor.escritorio_octoprint_target_bed_temp
+                        unit: °C
+                        name: Deve ser
+                  - entity: sensor.octoprint_job_percentage
+                    name: Status
+                    state_header: Status
+                    icon: mdi:bullseye-arrow
+                    type: custom:multiple-entity-row
+                    entities:
+                      - entity: sensor.octoprint_job_percentage
+                        name: Progresso
+                      - entity: switch.tomada_ender_3_v3_se_01
+                        name: Eletricidade
+                  - entity: sensor.octoprint_current_file
+                    name: arquivo
+                    icon: mdi:file-outline
+                  - entity: sensor.octoprint_job_percentage
+                    name: Tempo
+                    icon: mdi:clock-outline
+                    state_header: Pronto
+                    secondary_info: last-changed
+                    type: custom:multiple-entity-row
+                    entities:
+                      - entity: sensor.octoprint_estimated_finish_time
+                        name: Restante
+                      - entity: sensor.octoprint_start_time
+                        name: Decorrido
+              - type: picture-entity
+                style:
+                  .: |
+                    ha-card {
+                      height: 330px;
+                    }
+                entity: camera.octoprint_camera
+                camera_view: live
+                show_name: false
+                show_state: false
+      - type: grid
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: CAIXAS DE SECAGEM
+              - type: horizontal-stack
+                cards:
+                  - type: entities
+                    style:
+                      .: |
+                        ha-card {
+                          border: solid 1px var(--border-color);
+                          font-family: Raleway;
+                        }
+                      '#states div':
+                        multiple-entity-row:
+                          $: |
+                            state-badge {
+                               display: none;
+                            }
+                            .info {
+                              flex: 1 0 30px !important;
+                              margin-left: -8px !important;
+                            }
+                    entities:
+                      - entity: sensor.drybox_01_temperatura_da_drybox_01
+                        name: Box 1
+                        icon: false
+                        state_header: Temperatura
+                        type: custom:multiple-entity-row
+                        entities:
+                          - entity: sensor.drybox_01_umidade_da_drybox_01
+                            unit: '%'
+                            name: Humidade
+              - type: markdown
+                content: FILAMENTOS
+              - type: custom:auto-entities
+                card:
+                  type: entities
+                  title: Meus Filamentos
+                  icon: mdi:printer-3d-nozzle
+                filter:
+                  include:
+                    - entity_id: '*spoolman*'
+                options:
+                  type: custom:multiple-entity-row
+              - type: markdown
+                content: Estatisticas
+              - type: vertical-stack
+                cards:
+                  - type: entity
+                    entity: sensor.octoprint_current_state
+                    name: Status da Ender 3
+                    icon: mdi:printer-3d
+                  - type: grid
+                    square: false
+                    columns: 2
+                    cards:
+                      - type: entity
+                        entity: sensor.tomada_ender_3_v3_se_01_consumo_mensal_ender3
+                        name: Impressão Atual
+                        icon: mdi:printer-3d-nozzle
+                        state_color: true
+                      - type: entity
+                        entity: sensor.tomada_ender_3_v3_se_01_consumo_mensal_ender3
+                        name: Consumo Mensal
+                        icon: mdi:calendar-month
+                        state_color: true
