@@ -1,10 +1,10 @@
-#Instruções
+#**Instruções**#
 
 Eu queria uma caixa desumidificadora (drybox) que fosse o mais acessível possível, sem abrir mão de funcionalidades!
 
 Já existem muitos projetos por aí que utilizam o conhecido pote para cereais como base, mas nenhum deles atende a todos os meus critérios. Eu quis mudar isso.
 
-Características:
+#**Características:**#
 Baixo consumo de material, apenas ~360g de filamento para  acomodar  4 rolos
 Etiquetas substituíveis e personalizáveis
 Higrômetro
