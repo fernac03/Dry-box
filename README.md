@@ -28,3 +28,24 @@ Sílica gel
 
 # Opcional
 1 x Módulo de Display OLED de 0,91 Polegadas I2C 128x32 para
+
+
+### 📋 Tabela de Conexões (Pinout)
+
+Como tanto o sensor quanto o display utilizam o protocolo de comunicação I2C, eles compartilham o mesmo barramento (pinos de dados e clock) conectados em paralelo no Wemos D1 Mini.
+
+| Componente | Pino do Componente | Pino no Wemos D1 Mini | Tipo de Sinal / Função |
+| :--- | :--- | :--- | :--- |
+| **Sensor SHT40** | VCC | 3V3 | Alimentação Positiva (3.3V) |
+| | GND | GND | Referência de Terra (0V) |
+| | SDA | D2 (GPIO4) | Linha de Dados I2C (*Serial Data*) |
+| | SCL | D1 (GPIO5) | Linha de Clock I2C (*Serial Clock*) |
+| **Display OLED 0.91"** <br>*(Opcional)* | VCC | 3V3 | Alimentação Positiva (3.3V) |
+| | GND | GND | Referência de Terra (0V) |
+| | SDA | D2 (GPIO4) | Linha de Dados I2C (Compartilhada) |
+| | SCL | D1 (GPIO5) | Linha de Clock I2C (Compartilhada) |
+
+> ⚠️ **Nota:** A maioria dos módulos comerciais SHT40 e displays OLED 0.91" já possui resistores de *pull-up* embutidos nas linhas I2C, dispensando o uso de componentes externos para essa montagem básica.
+
+  <img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/9461f459-1d0d-402f-893c-d2df9871e56d" />
+
